@@ -4,15 +4,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.demo.schoolmanagement.StudentsWindowController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.schoolmanagement.StudentsWindowController">
 
     <children>
-        <Label layoutX="174.0" layoutY="118.0" text="This is students window">
+        <Label alignment="CENTER" layoutY="7.0" prefHeight="35.0" prefWidth="600.0" text="Uczniowie" AnchorPane.topAnchor="20.0">
             <font>
-                <Font size="24.0" />
+                <Font name="System Bold" size="24.0" />
             </font>
         </Label>
         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToMainWindow" text="&lt;-">
@@ -20,5 +17,11 @@
                 <Font size="10.0" />
             </font>
         </Button>
+        <Button alignment="CENTER" layoutX="1.0" layoutY="95.0" mnemonicParsing="false" onAction="#addStudent" prefHeight="26.0" prefWidth="600.0" text="Dodaj Ucznia" textAlignment="CENTER" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Button>
+      <ListView fx:id="studentslistview" layoutX="7.0" layoutY="111.0" prefHeight="289.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0" />
     </children>
 </AnchorPane>

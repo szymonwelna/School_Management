@@ -1,10 +1,16 @@
 package com.demo.schoolmanagement;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,4 +29,37 @@ public class StudentsWindowController {
         stage.setScene(scene);
         stage.show();
     }
+    // Przycisk dodania ucznia
+    public void addStudent(ActionEvent event) throws IOException {
+        System.out.println("Dodaje ucznia wariacie");
+        // Tutaj wyląduje cały kod związany z dodaniem ucznia do listy
+    }
+
+
+    // Lista przechowująca uczniów
+    @FXML
+    private ListView<String> studentslistview;
+
+    private ObservableList<String> students = FXCollections.observableArrayList(
+            "Jan Kowalski", "Anna Nowak", "Piotr Zieliński", "Katarzyna Wiśniewska", "Tomasz Wójcik", "Agnieszka Kaczmarek", "Michał Mazur", "Monika Adamczyk", "Paweł Dąbrowski", "Ewa Jabłońska", "Krzysztof Zawadzki", "Maria Wojciechowska", "Grzegorz Kamiński", "Joanna Walczak", "Łukasz Sikora", "Sylwia Baran", "Damian Sadowski", "Natalia Dudek", "Adrian Walczak", "Iwona Kwiatkowska", "Rafał Głowacki", "Dominika Zielińska", "Jakub Wojtaszek", "Karolina Nowicka", "Mateusz Król", "Aleksandra Bąk", "Sebastian Majewski", "Patrycja Malinowska", "Grzegorz Brzęczyszczykiewicz"
+    );
+
+    @FXML
+    public void initialize() {
+        // Dodanie listy uczniów do ListView
+        studentslistview.setItems(students);
+
+        // Obsługa kliknięcia na elemencie listy
+        studentslistview.setOnMouseClicked(this::clickedOnStudent);
+    }
+
+    // Funkcja wywoływana po kliknięciu na ucznia
+    private void clickedOnStudent(MouseEvent event) {
+        String chosenStudent = studentslistview.getSelectionModel().getSelectedItem();
+        if (chosenStudent != null) {
+            System.out.println("Wybrano ucznia: " + chosenStudent);
+            // Tutaj mogę potem wywołać okienko do manipulowania danymi ucznia
+        }
+    }
+
 }
