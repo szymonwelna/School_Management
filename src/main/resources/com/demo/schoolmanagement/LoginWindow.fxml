@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.schoolmanagement.LoginWindowController">
+   <children>
+      <Button fx:id="loginbutton" layoutX="254.0" layoutY="310.0" mnemonicParsing="false" onAction="#Login" text="Confirm Login" />
+      <Label layoutX="225.0" layoutY="129.0" text="Login" />
+      <Label layoutX="224.0" layoutY="213.0" prefHeight="18.0" prefWidth="30.0" text="Hasło" />
+      <TextField fx:id="nametextfield" layoutX="225.0" layoutY="147.0" />
+      <PasswordField layoutX="226.0" layoutY="231.0" />
+   </children>
+</AnchorPane>
