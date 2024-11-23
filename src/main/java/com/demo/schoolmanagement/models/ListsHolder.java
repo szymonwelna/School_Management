@@ -48,5 +48,9 @@ public class ListsHolder {
         return lastId;
     }
 
+    public Map<Integer, Student> getStudents() {
+        return students;
+    }
+
     // Pozostałe metody (np. do ładowania danych, uzyskiwania list) można dodać tutaj
 }

@@ -1,5 +1,6 @@
 package com.demo.schoolmanagement;
 
+import com.demo.schoolmanagement.models.ListsHolder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,12 +9,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class StudentsWindowController {
 
@@ -40,12 +41,20 @@ public class StudentsWindowController {
     @FXML
     private ListView<String> studentslistview;
 
-    private ObservableList<String> students = FXCollections.observableArrayList(
-            "Jan Kowalski", "Anna Nowak", "Piotr Zieliński", "Katarzyna Wiśniewska", "Tomasz Wójcik", "Agnieszka Kaczmarek", "Michał Mazur", "Monika Adamczyk", "Paweł Dąbrowski", "Ewa Jabłońska", "Krzysztof Zawadzki", "Maria Wojciechowska", "Grzegorz Kamiński", "Joanna Walczak", "Łukasz Sikora", "Sylwia Baran", "Damian Sadowski", "Natalia Dudek", "Adrian Walczak", "Iwona Kwiatkowska", "Rafał Głowacki", "Dominika Zielińska", "Jakub Wojtaszek", "Karolina Nowicka", "Mateusz Król", "Aleksandra Bąk", "Sebastian Majewski", "Patrycja Malinowska", "Grzegorz Brzęczyszczykiewicz"
-    );
+    private ObservableList<String> students = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        // Pobranie instancji ListsHolder
+        ListsHolder listsHolder = ListsHolder.getInstance();
+
+        // Przekształcenie listy uczniów na ObservableList<String>
+        students.setAll(
+                listsHolder.getStudents().values().stream()
+                        .map(student -> student.getFirstName() + " " + student.getLastName())
+                        .collect(Collectors.toList())
+        );
+
         // Dodanie listy uczniów do ListView
         studentslistview.setItems(students);
 

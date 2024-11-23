@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,13 +14,20 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         try {
+            // Inicjalizacja listy studentów przed załadowaniem okna
+            initStudentsList();
+
             Parent root = FXMLLoader.load(getClass().getResource("LoginWindow.fxml"));
             Scene scene = new Scene(root);
             stage.setTitle("School Management");
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
-        }catch (IOException e) {
+
+            // Weryfikacja w terminalu, czy uczniowie zostali poprawnie dodani
+            verifyStudentsInHolder();
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -30,7 +36,7 @@ public class MainApp extends Application {
         launch(args);
     }
 
-
+    // #temporary
     // Tymczasowa funkcja służąca wypełnieniu listy studentów
     public void initStudentsList() {
         ListsHolder listsHolder = ListsHolder.getInstance();
@@ -57,4 +63,14 @@ public class MainApp extends Application {
         }
     }
 
+    // #temporary
+    // Funkcja weryfikująca, czy uczniowie zostali poprawnie dodani do ListsHolder
+    public void verifyStudentsInHolder() {
+        ListsHolder listsHolder = ListsHolder.getInstance();
+
+        System.out.println("Lista uczniów w ListsHolder:");
+        listsHolder.getStudents().forEach((id, student) -> {
+            System.out.println("ID: " + id + ", Imię: " + student.getFirstName() + ", Nazwisko: " + student.getLastName());
+        });
+    }
 }
