@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -23,5 +24,43 @@
             </font>
         </Button>
       <ListView fx:id="studentslistview" layoutX="7.0" layoutY="111.0" prefHeight="289.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0" />
+        <Pane fx:id="clickblocker" prefHeight="400.0" prefWidth="600.0" visible="false" />
+        <VBox fx:id="addstudentvbox" alignment="TOP_CENTER" layoutX="152.0" layoutY="38.0" prefHeight="336.0" prefWidth="242.0" style="-fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="42.0" prefWidth="130.0" text="Nowy Uczeń">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label prefHeight="20.0" prefWidth="275.0" text="Imię:">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="firstnamefield" prefHeight="26.0" prefWidth="241.0" />
+            <Label />
+            <Label prefHeight="20.0" prefWidth="282.0" text="Nazwisko:">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="lastnamefield" />
+            <Label />
+            <Label prefHeight="20.0" prefWidth="281.0" text="Klasa:">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <ListView fx:id="classeslistview" prefHeight="106.0" prefWidth="280.0" />
+            <HBox prefHeight="55.0" prefWidth="280.0">
+               <children>
+                  <Button fx:id="cancelbutton" mnemonicParsing="false" onAction="#addStudentCancel" prefHeight="46.0" prefWidth="147.0" text="Anuluj">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></Button>
+                  <Button fx:id="confirmbutton" mnemonicParsing="false" onAction="#addStudentConfirm" prefHeight="46.0" prefWidth="145.0" text="Dodaj ucznia" />
+               </children>
+            </HBox>
+         </children></VBox>
     </children>
 </AnchorPane>

@@ -14,11 +14,11 @@ public class Person {
         id = newId;
     }
 
-    public void changeName(String newName) {
+    public void changeFirstName(String newName) {
         name = newName;
     }
 
-    public void changeSurname(String newSurname) {
+    public void changeLastName(String newSurname) {
         surname = newSurname;
     }
 
@@ -26,11 +26,11 @@ public class Person {
         return id;
     }
 
-    public String getName() {
+    public String getFirstName() {
         return name;
     }
 
-    public String getSurname() {
+    public String getLastName() {
         return surname;
     }
 }

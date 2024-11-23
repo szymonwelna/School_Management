@@ -1,5 +1,7 @@
 package com.demo.schoolmanagement;
 
+import com.demo.schoolmanagement.models.ListsHolder;
+import com.demo.schoolmanagement.models.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,18 +10,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class StudentsWindowController {
 
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    // Pobranie instancji ListsHolder
+    ListsHolder listsHolder = ListsHolder.getInstance();
+
+    // Zainicjowanie blokera kliknięć, który będzie uniemożliwiał klikanie poza pop-upami
+    @FXML
+    private Pane clickblocker;
 
     // Powrót do MainWindow
     public void switchToMainWindow(ActionEvent event) throws IOException {
@@ -29,23 +41,67 @@ public class StudentsWindowController {
         stage.setScene(scene);
         stage.show();
     }
+
+
+
+
+
+    @FXML
+    private VBox addstudentvbox;
+    @FXML
+    private TextField firstnamefield;
+    @FXML
+    private TextField lastnamefield;
+    @FXML
+    private ListView<String> classeslistview;
+
+
     // Przycisk dodania ucznia
     public void addStudent(ActionEvent event) throws IOException {
-        System.out.println("Dodaje ucznia wariacie");
+        clickblocker.setVisible(true);
+        addstudentvbox.setVisible(true);
         // Tutaj wyląduje cały kod związany z dodaniem ucznia do listy
     }
+
+    public void addStudentConfirm(ActionEvent event) throws IOException {
+        String firstName = firstnamefield.getText();
+        String lastName = lastnamefield.getText();
+
+        if (!firstName.isEmpty() && !lastName.isEmpty()) {
+            Student student = new Student(listsHolder.getLastId(), firstName, lastName);
+            listsHolder.addStudentToList(student);
+            students.add(firstName+" "+lastName);
+            clickblocker.setVisible(false);
+            addstudentvbox.setVisible(false);
+        } else {
+            System.out.println("Błąd dodawania ucznia. Proszę uzupełnić dane.");
+        }
+    }
+
+    public void addStudentCancel(ActionEvent event) throws IOException {
+        firstnamefield.clear();
+        lastnamefield.clear();
+        clickblocker.setVisible(false);
+        addstudentvbox.setVisible(false);
+    }
+
 
 
     // Lista przechowująca uczniów
     @FXML
     private ListView<String> studentslistview;
 
-    private ObservableList<String> students = FXCollections.observableArrayList(
-            "Jan Kowalski", "Anna Nowak", "Piotr Zieliński", "Katarzyna Wiśniewska", "Tomasz Wójcik", "Agnieszka Kaczmarek", "Michał Mazur", "Monika Adamczyk", "Paweł Dąbrowski", "Ewa Jabłońska", "Krzysztof Zawadzki", "Maria Wojciechowska", "Grzegorz Kamiński", "Joanna Walczak", "Łukasz Sikora", "Sylwia Baran", "Damian Sadowski", "Natalia Dudek", "Adrian Walczak", "Iwona Kwiatkowska", "Rafał Głowacki", "Dominika Zielińska", "Jakub Wojtaszek", "Karolina Nowicka", "Mateusz Król", "Aleksandra Bąk", "Sebastian Majewski", "Patrycja Malinowska", "Grzegorz Brzęczyszczykiewicz"
-    );
+    private ObservableList<String> students = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        // Przekształcenie listy uczniów na ObservableList<String>
+        students.setAll(
+                listsHolder.getStudents().values().stream()
+                        .map(student -> student.getFirstName() + " " + student.getLastName())
+                        .collect(Collectors.toList())
+        );
+
         // Dodanie listy uczniów do ListView
         studentslistview.setItems(students);
 
