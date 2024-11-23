@@ -48,6 +48,10 @@ public class ListsHolder {
         return lastId;
     }
 
+    public Student getStudentById(int id) {
+        return students.get(id);
+    }
+
     public Map<Integer, Student> getStudents() {
         return students;
     }
