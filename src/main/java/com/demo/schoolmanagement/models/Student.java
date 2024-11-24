@@ -13,7 +13,7 @@ public class Student extends Person {
         super(id, name, surname);
     }
 
-    public void setGroup(Class studentsClass) {
+    public void setClass(Class studentsClass) {
         this.studentsClass = studentsClass;
     }
 

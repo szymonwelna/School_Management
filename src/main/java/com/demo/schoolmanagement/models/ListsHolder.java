@@ -1,5 +1,6 @@
 package com.demo.schoolmanagement.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,7 +12,7 @@ public class ListsHolder {
 
     // Prywatne pola
     private int lastId = 0;
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
     private Map<Integer, Student> students = new ConcurrentHashMap<>();
     private Map<Integer, Teacher> teachers = new ConcurrentHashMap<>();
     private int lecturesNum = 0;
@@ -25,27 +26,26 @@ public class ListsHolder {
         return instance;
     }
 
-    // Metoda dodawania studenta
-    public void addStudentToList(Student student) {
-        students.put(student.getId(), student);
-        lastId++;
-    }
-
-    // Metoda dodawania nauczyciela
-    public void addTeacherToList(Teacher teacher) {
-        teachers.put(teacher.getId(), teacher);
-        lastId++;
-    }
-
-    // Metoda dodawania wykładu
-    public void addLectureToList(Lecture lecture) {
-        lectures.put(lecturesNum++, lecture);
-        lastId++;
-    }
-
     // Getter do pobierania ostatniego ID
     public int getLastId() {
         return lastId;
+    }
+
+
+    // Metody zarządzania użytkownikami
+    public void addNewUser(User user) {
+        users.add(user);
+    }
+
+    public List<User> getUsers(List<User> users) {
+        return users;
+    }
+
+
+    // Metody zarządzania uczniami
+    public void addStudentToList(Student student) {
+        students.put(student.getId(), student);
+        lastId++;
     }
 
     public Student getStudentById(int id) {
@@ -55,6 +55,23 @@ public class ListsHolder {
     public Map<Integer, Student> getStudents() {
         return students;
     }
+
+
+    // Metoda dodawania nauczyciela
+    public void addTeacherToList(Teacher teacher) {
+        teachers.put(teacher.getId(), teacher);
+        lastId++;
+    }
+
+
+    // Metoda dodawania wykładu
+    public void addLectureToList(Lecture lecture) {
+        lectures.put(lecturesNum++, lecture);
+        lastId++;
+    }
+
+
+
 
     // Pozostałe metody (np. do ładowania danych, uzyskiwania list) można dodać tutaj
 }

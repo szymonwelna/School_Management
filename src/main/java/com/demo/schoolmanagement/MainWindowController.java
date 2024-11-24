@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainAppController {
+public class MainWindowController {
 
     private Stage stage;
     private Scene scene;
@@ -29,6 +29,14 @@ public class MainAppController {
     // Można przenieść do innego kotrolera w celu utworzenia przycisku cofającego do głównego okna programu
     public void switchToMainWindow(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToSettingsWindow(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("SettingsWindow.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

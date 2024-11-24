@@ -53,7 +53,7 @@ public class StudentsWindowController {
     @FXML
     private TextField lastnamefield;
     @FXML
-    private ListView<String> classeslistview;
+    private ListView<String> classesListView;
 
 
     // Przycisk dodania ucznia

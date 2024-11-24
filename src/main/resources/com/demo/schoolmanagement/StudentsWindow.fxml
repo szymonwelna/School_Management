@@ -51,14 +51,14 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <ListView fx:id="classeslistview" prefHeight="106.0" prefWidth="280.0" />
+            <ListView fx:id="classesListView" prefHeight="106.0" prefWidth="280.0" />
             <HBox prefHeight="55.0" prefWidth="280.0">
                <children>
-                  <Button fx:id="cancelbutton" mnemonicParsing="false" onAction="#addStudentCancel" prefHeight="46.0" prefWidth="147.0" text="Anuluj">
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#addStudentCancel" prefHeight="46.0" prefWidth="147.0" text="Anuluj">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin></Button>
-                  <Button fx:id="confirmbutton" mnemonicParsing="false" onAction="#addStudentConfirm" prefHeight="46.0" prefWidth="145.0" text="Dodaj ucznia" />
+                  <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#addStudentConfirm" prefHeight="46.0" prefWidth="145.0" text="Dodaj ucznia" />
                </children>
             </HBox>
          </children></VBox>

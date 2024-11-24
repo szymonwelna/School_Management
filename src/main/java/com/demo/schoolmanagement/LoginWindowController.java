@@ -32,7 +32,7 @@ public class LoginWindowController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         root = loader.load();
 
-        MainAppController mainAppController = loader.getController();
+        MainWindowController mainAppController = loader.getController();
         mainAppController.displayName(username);
 
         //root = FXMLLoader.load(getClass().getResource("LoginWindow.fxml"));

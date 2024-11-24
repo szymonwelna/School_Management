@@ -6,7 +6,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.demo.schoolmanagement.MainAppController"
+            fx:controller="com.demo.schoolmanagement.MainWindowController"
             prefHeight="400.0" prefWidth="600.0">
 
     <children>
