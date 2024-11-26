@@ -68,7 +68,7 @@ public class StudentsWindowController {
         String lastName = lastnamefield.getText();
 
         if (!firstName.isEmpty() && !lastName.isEmpty()) {
-            Student student = new Student(listsHolder.getLastId(), firstName, lastName);
+            Student student = new Student(listsHolder.getLastStudentId(), firstName, lastName);
             listsHolder.addStudentToList(student);
             students.add(firstName+" "+lastName);
             clickblocker.setVisible(false);

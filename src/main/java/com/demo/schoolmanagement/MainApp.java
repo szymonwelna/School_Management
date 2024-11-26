@@ -58,7 +58,7 @@ public class MainApp extends Application {
             String lastName = nameParts[1];
 
             // Tworzenie studenta i dodawanie do globalnego ListsHolder
-            Student student = new Student(listsHolder.getLastId(), firstName, lastName);
+            Student student = new Student(listsHolder.getLastStudentId(), firstName, lastName);
             listsHolder.addStudentToList(student);
         }
     }

@@ -11,11 +11,12 @@ public class ListsHolder {
     private static final ListsHolder instance = new ListsHolder();
 
     // Prywatne pola
-    private int lastId = 0;
+    private int lastStudentId = 0;
+    private int lastTeacherId = 0;
+    private int lecturesNum = 0;
     private List<User> users = new ArrayList<>();
     private Map<Integer, Student> students = new ConcurrentHashMap<>();
     private Map<Integer, Teacher> teachers = new ConcurrentHashMap<>();
-    private int lecturesNum = 0;
     private Map<Integer, Lecture> lectures = new ConcurrentHashMap<>();
 
     // Prywatny konstruktor, by zapobiec tworzeniu innych instancji
@@ -24,11 +25,6 @@ public class ListsHolder {
     // Publiczny dostęp do singletona
     public static ListsHolder getInstance() {
         return instance;
-    }
-
-    // Getter do pobierania ostatniego ID
-    public int getLastId() {
-        return lastId;
     }
 
 
@@ -42,10 +38,16 @@ public class ListsHolder {
     }
 
 
+    //region Students
+    // Getter do pobierania ostatniego ID ucznia
+    public int getLastStudentId() {
+        return lastStudentId;
+    }
+
     // Metody zarządzania uczniami
     public void addStudentToList(Student student) {
         students.put(student.getId(), student);
-        lastId++;
+        lastStudentId++;
     }
 
     public Student getStudentById(int id) {
@@ -56,21 +58,25 @@ public class ListsHolder {
         return students;
     }
 
+    //endregion
 
+    //region Teachers
     // Metoda dodawania nauczyciela
     public void addTeacherToList(Teacher teacher) {
         teachers.put(teacher.getId(), teacher);
-        lastId++;
+        lastTeacherId++;
     }
 
+    //endregion
 
+    //region Lectures
     // Metoda dodawania wykładu
     public void addLectureToList(Lecture lecture) {
         lectures.put(lecturesNum++, lecture);
-        lastId++;
+        lecturesNum++;
     }
 
-
+    //endregion
 
 
     // Pozostałe metody (np. do ładowania danych, uzyskiwania list) można dodać tutaj

@@ -1,74 +1,65 @@
 package com.demo.schoolmanagement.models;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Iterator;
+import java.util.Map;
 
 public class Class {
-
-    private int ClassNum;
-    private char ClassChar;
+    private String classId;
 
     private int ClassSize;
-    private Teacher ClassTeacher;
-    private List<Student> students;
-    private List<Lecture> lectures;
+    private int classTeacherId;
+    private List<Integer> studentsIds;
+    private List<Integer> lecturesIds;
 
-    public Class(int num, char ClassChar, Teacher ClassTeacher) {
-        ClassNum = num;
-        this.ClassChar = ClassChar;
-        this.ClassTeacher = ClassTeacher;
+    public Class(String classId, int classTeacher) {
+        this.classId = classId;
+        this.classTeacherId = classTeacher;
     }
 
+    public String getClassId() {return classId;}
 
+    //region Teachers management
     public void changeTeacher(Teacher newTeacher) {
-        ClassTeacher = newTeacher;
+        classTeacherId = newTeacher.getId();
     }
-    public Teacher getTeacher() {
-        return ClassTeacher;
+    public int getTeacher() {
+        return classTeacherId;
     }
+    public void changeTeacherById(int newTeacherId) {
+        classTeacherId = newTeacherId;
+    }
+    //endregion
 
-
-    // Students management
+    //region Students management
     public void addStudent(Student newStudent) {
-        students.add(newStudent);
+        studentsIds.add(newStudent.getId());
         ClassSize++;
+    }
+    public void addStudentById(int id) {
+        studentsIds.add(id);
     }
 
     public void removeStudent(int id) {
-        Iterator<Student> iterator = students.iterator();
-
-        while (iterator.hasNext()) {
-            Student obj = iterator.next();
-            if (obj.getId() == id) {
-                iterator.remove();
-                ClassSize--;
-                System.out.println("Usunięto ucznia o ID: " + id);
-                break;
-            }
-        }
+        studentsIds.remove(id);
     }
 
-    public List<Student> getStudents() {
-        return students;
+    public List<Integer> getStudents() {
+        return studentsIds;
     }
+    //endregion
 
-    // Lectures management
+    //region Lectures management
     public void addLecture(Lecture lecture) {
-        lectures.add(lecture);
+        lecturesIds.add(lecture.getId());
     }
 
-    public void removeLecture(String lectureName) {
-        Iterator<Lecture> iterator = lectures.iterator();
+    public void addLectureById(int id) {lecturesIds.add(id);}
 
-        while (iterator.hasNext()) {
-            Lecture obj = iterator.next();
-            if (obj.getLectureName() == lectureName) {
-                iterator.remove();
-                System.out.println("Usunięto lekcję: " + lectureName);
-                break;
-            }
-        }
+    public void removeLecture(int lectureId) {
+        lecturesIds.remove(lectureId);
     }
-
+    //endregion
 }
 

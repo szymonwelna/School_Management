@@ -4,7 +4,8 @@ module com.demo.schoolmanagement {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires com.google.gson;
 
-    opens com.demo.schoolmanagement to javafx.fxml;
+    opens com.demo.schoolmanagement to com.google.gson, javafx.fxml;
     exports com.demo.schoolmanagement;
 }

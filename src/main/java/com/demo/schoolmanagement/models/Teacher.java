@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Teacher extends Person {
     private int classroomNumber;
-    private List<Lecture> lectures = new ArrayList<>(); // Inicjalizacja pustej listy
+    private List<Integer> lecturesIds = new ArrayList<>();
 
     public Teacher(int id, String name, String surname) {
         super(id, name, surname);
@@ -21,23 +21,14 @@ public class Teacher extends Person {
     }
 
     public void addLecture(Lecture lecture) {
-        lectures.add(lecture);
+        lecturesIds.add(lecture.getLectureId());
     }
 
     public void removeLecture(String lectureName) {
-        Iterator<Lecture> iterator = lectures.iterator();
-
-        while (iterator.hasNext()) {
-            Lecture lec = iterator.next();
-            if (lec.getLectureName().equals(lectureName)) { // Używamy equals do porównania nazw
-                iterator.remove();
-                System.out.println("Usunięto lekcję: " + lectureName);
-                break;
-            }
-        }
+        lecturesIds.remove(lectureName);
     }
 
-    public int getLecturesNum() {
-        return lectures.size(); // Zwraca liczbę wykładów
+    public int getTeacherLecturesNum() {
+        return lecturesIds.size(); // Zwraca liczbę wykładów
     }
 }
