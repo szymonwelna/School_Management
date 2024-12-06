@@ -24,7 +24,6 @@ public class MainApp extends Application {
             stage.setScene(scene);
             stage.setResizable(false);
 
-            // Dodanie handlera na zdarzenie zamknięcia okna
             stage.setOnCloseRequest(event -> {
                 saveData();
             });
@@ -47,6 +46,5 @@ public class MainApp extends Application {
         deserializeSchoolClasses();
         deserializeLectures();
     }
-
 
 }

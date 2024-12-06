@@ -9,6 +9,7 @@
       <Label layoutX="225.0" layoutY="105.0" prefHeight="18.0" prefWidth="30.0" text="Login" />
       <Label layoutX="224.0" layoutY="160.0" prefHeight="18.0" prefWidth="30.0" text="Hasło" />
       <TextField fx:id="nametextfield" layoutX="225.0" layoutY="123.0" />
-      <PasswordField layoutX="225.0" layoutY="178.0" />
+      <PasswordField fx:id="passwordtextfield" layoutX="225.0" layoutY="178.0" />
+      <Label fx:id="wrongPassword" layoutX="228.0" layoutY="70.0" prefHeight="34.0" prefWidth="143.0" text="Podany login lub hasło są nieprawidłowe" textAlignment="CENTER" textFill="RED" visible="false" wrapText="true" />
    </children>
 </AnchorPane>
