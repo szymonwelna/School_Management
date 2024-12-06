@@ -1,6 +1,5 @@
 package com.demo.schoolmanagement;
 
-import com.demo.schoolmanagement.models.ListsHolder;
 import com.demo.schoolmanagement.models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,9 +55,9 @@ public class SettingsWindow {
         String confirmPassword = confirmPasswordTextField.getText();
 
         if (password.equals(confirmPassword) && !username.isEmpty()) {
-            User newUser = new User(username, password);
-            ListsHolder listsHolder = ListsHolder.getInstance();
-            listsHolder.addNewUser(newUser);
+            User newUser = new User(1, username, password);
+            DataHolder dataHolder = DataHolder.getInstance();
+            dataHolder.addUser(newUser);
             hideAddUserPane();
         } else {
             System.out.println("Passwords do not match");

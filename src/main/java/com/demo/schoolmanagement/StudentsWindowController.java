@@ -1,6 +1,5 @@
 package com.demo.schoolmanagement;
 
-import com.demo.schoolmanagement.models.ListsHolder;
 import com.demo.schoolmanagement.models.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,8 +25,8 @@ public class StudentsWindowController {
     private Scene scene;
     private Parent root;
 
-    // Pobranie instancji ListsHolder
-    ListsHolder listsHolder = ListsHolder.getInstance();
+    // Pobranie instancji DataHolder
+    DataHolder dataHolder = DataHolder.getInstance();
 
     // Zainicjowanie blokera kliknięć, który będzie uniemożliwiał klikanie poza pop-upami
     @FXML
@@ -51,7 +50,7 @@ public class StudentsWindowController {
     @FXML
     private TextField firstnamefield;
     @FXML
-    private TextField lastnamefield;
+    private TextField surnameField;
     @FXML
     private ListView<String> classesListView;
 
@@ -65,12 +64,12 @@ public class StudentsWindowController {
 
     public void addStudentConfirm(ActionEvent event) throws IOException {
         String firstName = firstnamefield.getText();
-        String lastName = lastnamefield.getText();
+        String surname = surnameField.getText();
 
-        if (!firstName.isEmpty() && !lastName.isEmpty()) {
-            Student student = new Student(listsHolder.getLastStudentId(), firstName, lastName);
-            listsHolder.addStudentToList(student);
-            students.add(firstName+" "+lastName);
+        if (!firstName.isEmpty() && !surname.isEmpty()) {
+            Student student = new Student(firstName, surname, dataHolder.getLastStudentId());
+            dataHolder.addStudent(student);
+            students.add(firstName+" "+surname);
             clickblocker.setVisible(false);
             addstudentvbox.setVisible(false);
         } else {
@@ -80,7 +79,7 @@ public class StudentsWindowController {
 
     public void addStudentCancel(ActionEvent event) throws IOException {
         firstnamefield.clear();
-        lastnamefield.clear();
+        surnameField.clear();
         clickblocker.setVisible(false);
         addstudentvbox.setVisible(false);
     }
@@ -97,8 +96,8 @@ public class StudentsWindowController {
     public void initialize() {
         // Przekształcenie listy uczniów na ObservableList<String>
         students.setAll(
-                listsHolder.getStudents().values().stream()
-                        .map(student -> student.getFirstName() + " " + student.getLastName())
+                dataHolder.getStudents().values().stream()
+                        .map(student -> student.getName() + " " + student.getSurname())
                         .collect(Collectors.toList())
         );
 

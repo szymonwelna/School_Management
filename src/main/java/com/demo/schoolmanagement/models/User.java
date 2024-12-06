@@ -1,18 +1,26 @@
 package com.demo.schoolmanagement.models;
 
 public class User {
-    private String name;
+    private int uprawnienia;    // 1 - Użytkownik standardowy 2 - Administrator
+    private String login;
     private String password;
 
-    public User(String name, String password) {
-        this.name = name;
+    public User(int uprawnienia, String login, String password) {
+        this.uprawnienia = uprawnienia;
+        this.login = login;
         this.password = password;
     }
-    public String getName() {
-        return name;
+    public int getUprawnienia() {
+        return uprawnienia;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setUprawnienia(int uprawnienia) {
+        this.uprawnienia = uprawnienia;
+    }
+    public String getLogin() {
+        return login;
+    }
+    public void setLogin(String login) {
+        this.login = login;
     }
     public String getPassword() {
         return password;

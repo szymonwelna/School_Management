@@ -1,36 +1,66 @@
 package com.demo.schoolmanagement.models;
 
-import java.util.List;
-import java.util.Map;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Lecture {
+
     private int lectureId;
     private String lectureName;
-    private List<Integer> teachers;
-    // Lecture Time
-    private Map<Integer, List<LocalTime>> lectureTime;  // Przechowuje dane w postaci: Dzień tygodnia (int), godziny zajęć tego dnia (localtime)
+    private List<Integer> lectureTeachers = new ArrayList<>();
+    private List<LocalTime> lectureHours = new ArrayList<>();
 
-    public Lecture(int lectureId, String lectureName, List<Integer> teachers, Map<Integer, List<LocalTime>> lectureTime) {
+    public Lecture(int lectureId, String lectureName) {
         this.lectureId = lectureId;
         this.lectureName = lectureName;
-        this.teachers = teachers;
-        this.lectureTime = lectureTime;
     }
 
-    public void setLectureId(int lectureId) {this.lectureId = lectureId;}
-
-    public int getLectureId() {return lectureId;}
-
-    public void setLectureName(String newName) {
-        lectureName = newName;
+    //region Zarządzanie id
+    public int getLectureId() {
+        return lectureId;
     }
 
+    public void setLectureId(int lectureId) {
+        this.lectureId = lectureId;
+    }
+    //endregion
+
+    //region Zarządzanie nazwą lekcji/kursu
     public String getLectureName() {
         return lectureName;
     }
 
-    public Integer getId() {
-        return lectureId;
+    public void setLectureName(String lectureName) {
+        this.lectureName = lectureName;
     }
+    //endregion
+
+    //region Zarządzanie nauczycielami
+    public List<Integer> getLectureTeachers() {
+        return lectureTeachers;
+    }
+
+    public void addLectureTeacher(int teacherId) {
+        this.lectureTeachers.add(teacherId);
+    }
+
+    public void setLectureTeachers(List<Integer> lectureTeachers) {
+        this.lectureTeachers = lectureTeachers;
+    }
+    //endregion
+
+    //region Zarządzanie godzinami zajęć
+    public List<LocalTime> getLectureHours() {
+        return lectureHours;
+    }
+
+    public void addLectureHour(int hour, int minute) {
+        this.lectureHours.add(LocalTime.of(hour, minute));
+    }
+
+    public void setLectureHours(List<LocalTime> lectureHours) {
+        this.lectureHours = lectureHours;
+    }
+    //endregion
 }
