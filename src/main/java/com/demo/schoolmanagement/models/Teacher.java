@@ -1,34 +1,43 @@
 package com.demo.schoolmanagement.models;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Teacher extends Person {
-    private int classroomNumber;
-    private List<Integer> lecturesIds = new ArrayList<>();
+    private int teacherId;
+    private int teacherSchoolClassId;
+    private List<Integer> teacherLecturesId = new ArrayList<>();
 
-    public Teacher(int id, String name, String surname) {
-        super(id, name, surname);
+    public Teacher(String name, String surname, int teacherId) {
+        super(name, surname);
+        this.teacherId = teacherId;
     }
 
-    public void addClassroomNumber(int number) {
-        classroomNumber = number;
+    public int getId() {
+        return teacherId;
+    }
+    public void setTeacherId(int Id) {
+        this.teacherId = Id;
     }
 
-    public int getClassroomNumber() {
-        return classroomNumber;
+    //region Zarządzanie klasą nauczyciela
+    public int getTeacherSchoolClassId() {
+        return teacherSchoolClassId;
     }
+    public void setTeacherSchoolClassId(int schoolClassId) {
+        this.teacherSchoolClassId = schoolClassId;
+    }
+    //endregion
 
-    public void addLecture(Lecture lecture) {
-        lecturesIds.add(lecture.getLectureId());
+    //region Zarządzanie lekcjami nauczyciela
+    public List<Integer> getTeacherLectures() {
+        return teacherLecturesId;
     }
-
-    public void removeLecture(String lectureName) {
-        lecturesIds.remove(lectureName);
+    public void addTeacherLecture(int lectureId) {
+        teacherLecturesId.add(lectureId);
     }
-
-    public int getTeacherLecturesNum() {
-        return lecturesIds.size(); // Zwraca liczbę wykładów
+    public void setTeacherLectures(List<Integer> lecturesIds) {
+        this.teacherLecturesId = lecturesIds;
     }
+    //endregion
 }

@@ -44,7 +44,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="lastnamefield" />
+            <TextField fx:id="surnameField" />
             <Label />
             <Label prefHeight="20.0" prefWidth="281.0" text="Klasa:">
                <font>

@@ -1,36 +1,23 @@
 package com.demo.schoolmanagement.models;
 
 public class Person {
-    private int id;
     private String name;
     private String surname;
 
-    public Person(int id, String name, String surname) {
-        this.id = id;
+    public Person (String name, String surname) {
         this.name = name;
         this.surname = surname;
     }
-    public void updateId(int newId) {
-        id = newId;
+    public void changeName(String name) {
+        this.name = name;
     }
-
-    public void changeFirstName(String newName) {
-        name = newName;
+    public void changeSurname(String surname) {
+        this.surname = surname;
     }
-
-    public void changeLastName(String newSurname) {
-        surname = newSurname;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getFirstName() {
+    public String getName() {
         return name;
     }
-
-    public String getLastName() {
+    public String getSurname() {
         return surname;
     }
 }
