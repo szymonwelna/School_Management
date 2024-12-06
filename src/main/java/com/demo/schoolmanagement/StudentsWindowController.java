@@ -41,10 +41,6 @@ public class StudentsWindowController {
         stage.show();
     }
 
-
-
-
-
     @FXML
     private VBox addstudentvbox;
     @FXML

@@ -13,7 +13,8 @@
          </font>
       </Label>
       <Button fx:id="addUserButton" alignment="CENTER" contentDisplay="CENTER" layoutX="225.0" layoutY="57.0" mnemonicParsing="false" onAction="#showAddUserPane" prefHeight="50.0" prefWidth="150.0" text="Dodaj Użytkownika" textAlignment="CENTER" />
-      <Button fx:id="deleteUserButton" layoutX="225.0" layoutY="120.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Usuń Użytkownika" />
+      <Button fx:id="deleteUserButton" layoutX="225.0" layoutY="120.0" mnemonicParsing="false" onAction="#showDeleteUserPane" prefHeight="50.0" prefWidth="150.0" text="Usuń Użytkownika" />
+      <Pane fx:id="clickBlocker" prefHeight="400.0" prefWidth="600.0" visible="false" />
       <AnchorPane fx:id="addUserPane" layoutX="160.0" layoutY="40.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="40.0">
          <children>
             <Label layoutX="28.0" layoutY="30.0" text="Login Użytkownika" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="30.0">
@@ -36,6 +37,19 @@
             <TextField fx:id="confirmPasswordTextField" layoutX="30.0" layoutY="210.0" prefHeight="35.0" prefWidth="220.0" />
             <Button fx:id="cancelNewUserButton" layoutX="14.0" layoutY="281.0" mnemonicParsing="false" onAction="#hideAddUserPane" text="Anuluj" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="280.0" />
             <Button fx:id="confirmNewUserButton" layoutX="200.0" layoutY="281.0" mnemonicParsing="false" onAction="#addNewUser" text="Zatwierdź" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="280.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="deleteUserPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <Label layoutX="62.0" layoutY="14.0" text="Usuń użytkownika">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="usersListView" layoutY="70.0" prefHeight="172.0" prefWidth="280.0" />
+            <Label fx:id="selectedUser" alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" layoutY="46.0" prefHeight="25.0" prefWidth="280.0" textAlignment="CENTER" textFill="RED" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <Button fx:id="confirmDeleteButton" layoutX="180.0" layoutY="281.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="26.0" prefWidth="85.0" text="Usuń" />
+            <Button fx:id="cancelDeleteButton" layoutX="14.0" layoutY="281.0" mnemonicParsing="false" onAction="#hideDeleteUserPane" prefHeight="26.0" prefWidth="85.0" text="Anuluj" />
          </children>
       </AnchorPane>
    </children>
