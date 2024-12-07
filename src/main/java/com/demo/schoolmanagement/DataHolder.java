@@ -52,6 +52,10 @@ public class DataHolder {
         lastStudentId++;
     }
 
+    public void removeStudent(int studentId) {
+        students.remove(studentId);
+    }
+
     public HashMap<Integer, Student> getStudents() {
         return students;
     }

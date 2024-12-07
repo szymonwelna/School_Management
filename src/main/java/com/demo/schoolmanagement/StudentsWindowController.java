@@ -12,11 +12,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StudentsWindowController {
@@ -26,91 +29,144 @@ public class StudentsWindowController {
     private Parent root;
 
     // Pobranie instancji DataHolder
-    DataHolder dataHolder = DataHolder.getInstance();
+    private final DataHolder dataHolder = DataHolder.getInstance();
 
-    // Zainicjowanie blokera kliknięć, który będzie uniemożliwiał klikanie poza pop-upami
+    // Mapa odwzorowująca pełne imię ucznia na obiekt Student
+    private final Map<String, Student> studentMap = new HashMap<>();
+
+    // Lista do zarządzania widokiem uczniów
+    private final ObservableList<String> students = FXCollections.observableArrayList();
+
+    @FXML
+    private ListView<String> studentslistview;
+
     @FXML
     private Pane clickblocker;
 
-    // Powrót do MainWindow
-    public void switchToMainWindow(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
+    //region Dodawanie ucznia
     @FXML
     private VBox addstudentvbox;
     @FXML
-    private TextField firstnamefield;
-    @FXML
-    private TextField surnameField;
-    @FXML
-    private ListView<String> classesListView;
+    private TextField firstnamefield, surnameField;
 
-
-    // Przycisk dodania ucznia
-    public void addStudent(ActionEvent event) throws IOException {
+    public void addStudent(ActionEvent event) {
         clickblocker.setVisible(true);
         addstudentvbox.setVisible(true);
-        // Tutaj wyląduje cały kod związany z dodaniem ucznia do listy
     }
 
-    public void addStudentConfirm(ActionEvent event) throws IOException {
+    public void addStudentConfirm(ActionEvent event) {
         String firstName = firstnamefield.getText();
         String surname = surnameField.getText();
 
         if (!firstName.isEmpty() && !surname.isEmpty()) {
             Student student = new Student(firstName, surname, dataHolder.getLastStudentId());
             dataHolder.addStudent(student);
-            students.add(firstName+" "+surname);
-            clickblocker.setVisible(false);
-            addstudentvbox.setVisible(false);
+            refreshStudentList(); // Aktualizacja listy uczniów
+            closeAddStudentPane();
         } else {
             System.out.println("Błąd dodawania ucznia. Proszę uzupełnić dane.");
         }
     }
 
-    public void addStudentCancel(ActionEvent event) throws IOException {
+    public void addStudentCancel(ActionEvent event) {
+        closeAddStudentPane();
+    }
+
+    private void closeAddStudentPane() {
         firstnamefield.clear();
         surnameField.clear();
         clickblocker.setVisible(false);
         addstudentvbox.setVisible(false);
     }
+    //endregion
 
-
-
-    // Lista przechowująca uczniów
+    //region Edytowanie ucznia
     @FXML
-    private ListView<String> studentslistview;
-
-    private ObservableList<String> students = FXCollections.observableArrayList();
-
+    private AnchorPane editUserPane;
     @FXML
-    public void initialize() {
-        // Przekształcenie listy uczniów na ObservableList<String>
-        students.setAll(
-                dataHolder.getStudents().values().stream()
-                        .map(student -> student.getName() + " " + student.getSurname())
-                        .collect(Collectors.toList())
-        );
+    private TextField firstNameTextField, lastNameTextField;
 
-        // Dodanie listy uczniów do ListView
-        studentslistview.setItems(students);
+    private Student currentStudent;
 
-        // Obsługa kliknięcia na elemencie listy
-        studentslistview.setOnMouseClicked(this::clickedOnStudent);
+    public void showEditUserPane(Student student) {
+        this.currentStudent = student;
+        firstNameTextField.setText(student.getName());
+        lastNameTextField.setText(student.getSurname());
+        clickblocker.setVisible(true);
+        editUserPane.setVisible(true);
     }
 
-    // Funkcja wywoływana po kliknięciu na ucznia
-    private void clickedOnStudent(MouseEvent event) {
-        String chosenStudent = studentslistview.getSelectionModel().getSelectedItem();
-        if (chosenStudent != null) {
-            System.out.println("Wybrano ucznia: " + chosenStudent);
-            // Tutaj mogę potem wywołać okienko do manipulowania danymi ucznia
+    public void hideEditUserPane() {
+        currentStudent = null;
+        firstNameTextField.clear();
+        lastNameTextField.clear();
+        clickblocker.setVisible(false);
+        editUserPane.setVisible(false);
+    }
+
+    public void confirmChanges() {
+        if (currentStudent != null) {
+            currentStudent.changeName(firstNameTextField.getText());
+            currentStudent.changeSurname(lastNameTextField.getText());
+            refreshStudentList(); // Aktualizacja listy uczniów
+            hideEditUserPane();
         }
     }
 
+    public void deleteStudent() {
+        if (currentStudent != null) {
+            dataHolder.removeStudent(currentStudent.getId());
+            refreshStudentList(); // Aktualizacja listy uczniów
+            hideEditUserPane();
+        }
+    }
+    //endregion
+
+    //region Obsługa listy uczniów
+    @FXML
+    public void initialize() {
+        // Inicjalizacja danych do widoku
+        refreshStudentList();
+
+        // Obsługa kliknięcia na liście
+        studentslistview.setOnMouseClicked(this::clickedOnStudent);
+    }
+
+    private void clickedOnStudent(MouseEvent event) {
+        String chosenStudentName = studentslistview.getSelectionModel().getSelectedItem();
+        if (chosenStudentName != null) {
+            Student chosenStudent = studentMap.get(chosenStudentName);
+            if (chosenStudent != null) {
+                showEditUserPane(chosenStudent);
+            }
+        }
+    }
+
+    private void refreshStudentList() {
+        students.clear();
+        studentMap.clear();
+
+        students.addAll(
+                dataHolder.getStudents().values().stream()
+                        .map(student -> {
+                            String fullName = student.getName() + " " + student.getSurname();
+                            studentMap.put(fullName, student);
+                            return fullName;
+                        })
+                        .collect(Collectors.toList())
+        );
+
+        studentslistview.setItems(students);
+    }
+    //endregion
+
+    //region Powrót do MainWindow
+    public void switchToMainWindow(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    //endregion
 }

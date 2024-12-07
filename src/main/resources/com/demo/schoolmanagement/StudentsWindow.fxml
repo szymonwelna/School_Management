@@ -62,5 +62,25 @@
                </children>
             </HBox>
          </children></VBox>
+      <AnchorPane fx:id="editUserPane" layoutX="130.0" layoutY="25.0" prefHeight="200.0" prefWidth="480.0" style="-fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="6.0" prefHeight="27.0" prefWidth="246.0" text="Edycja Ucznia" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="13.0" layoutY="45.0" text="Imię:" />
+            <Label layoutX="180.0" layoutY="45.0" text="Nazwisko:" />
+            <Label layoutX="10.0" layoutY="91.0" text="Klasa:" />
+            <Label layoutX="12.0" layoutY="201.0" prefHeight="18.0" prefWidth="39.0" text="Oceny:" />
+            <TextField fx:id="firstNameTextField" layoutX="10.0" layoutY="59.0" AnchorPane.leftAnchor="10.0" />
+            <TextField fx:id="lastNameTextField" layoutX="180.0" layoutY="59.0" AnchorPane.rightAnchor="10.399999999999977" />
+            <ListView fx:id="classesListView" layoutX="10.0" layoutY="109.0" prefHeight="85.0" prefWidth="320.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            <ListView fx:id="gradesListView" layoutX="10.0" layoutY="219.0" prefHeight="85.0" prefWidth="320.0" />
+            <Button fx:id="confirmButton" layoutX="217.0" layoutY="310.0" mnemonicParsing="false" onAction="#confirmChanges" text="Zatwierdź zmiany" />
+            <Button fx:id="cancelButton" layoutX="13.0" layoutY="310.0" mnemonicParsing="false" onAction="#hideEditUserPane" prefHeight="26.0" prefWidth="87.0" text="Anuluj" />
+            <Button fx:id="deleteStudentButton" layoutX="116.0" layoutY="310.0" mnemonicParsing="false" onAction="#deleteStudent" prefHeight="26.0" prefWidth="87.0" text="Usuń ucznia" />
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>
