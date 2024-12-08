@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
-public class SettingsWindow {
+public class SettingsWindowController {
 
     private Stage stage;
     private Scene scene;
