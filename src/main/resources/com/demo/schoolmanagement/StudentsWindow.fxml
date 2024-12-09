@@ -18,7 +18,7 @@
                 <Font size="10.0" />
             </font>
         </Button>
-        <Button alignment="CENTER" layoutX="1.0" layoutY="95.0" mnemonicParsing="false" onAction="#addStudent" prefHeight="26.0" prefWidth="600.0" text="Dodaj Ucznia" textAlignment="CENTER" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
+        <Button alignment="CENTER" layoutX="1.0" layoutY="95.0" mnemonicParsing="false" onAction="#showAddStudentPane" prefHeight="26.0" prefWidth="600.0" text="Dodaj Ucznia" textAlignment="CENTER" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -51,7 +51,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <ListView fx:id="classesListView" prefHeight="106.0" prefWidth="280.0" />
+            <ListView fx:id="schoolClassesListView" prefHeight="106.0" prefWidth="280.0" />
             <HBox prefHeight="55.0" prefWidth="280.0">
                <children>
                   <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#addStudentCancel" prefHeight="46.0" prefWidth="147.0" text="Anuluj">

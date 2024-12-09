@@ -1,5 +1,6 @@
 package com.demo.schoolmanagement;
 
+import com.demo.schoolmanagement.models.SchoolClass;
 import com.demo.schoolmanagement.models.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,11 +49,57 @@ public class StudentsWindowController {
     private VBox addstudentvbox;
     @FXML
     private TextField firstnamefield, surnameField;
+    @FXML
+    ListView<String> schoolClassesListView;
 
-    public void addStudent(ActionEvent event) {
+    // Mapa odwzorowująca nazwę klasy na obiekt SchoolClass
+    private Map<String, SchoolClass> schoolClassMap = new HashMap<>();
+
+    private ObservableList<String> schoolClasses = FXCollections.observableArrayList();
+
+    private SchoolClass selectedSchoolClass;
+
+    private void initializeSchoolClassesListView() {
+        schoolClassesListView.setOnMouseClicked(this::clickedOnSchoolClass);
+    }
+
+    private void clickedOnSchoolClass(MouseEvent event) {
+        String chosenSchoolClassId = schoolClassesListView.getSelectionModel().getSelectedItem();
+        if (chosenSchoolClassId != null) {
+            selectedSchoolClass = schoolClassMap.get(chosenSchoolClassId);
+        }
+    }
+
+    private void refreshSchoolClassesListView() {
+        schoolClasses.clear();
+        schoolClassMap.clear();
+
+        schoolClasses.addAll(
+                dataHolder.getSchoolClasses().stream()
+                        .map(schoolClass -> {
+                            String schoolClassId = schoolClass.getSchoolClassId();
+                            schoolClassMap.put(schoolClassId, schoolClass);
+                            return schoolClassId;
+                        })
+                        .collect(Collectors.toList())
+        );
+
+        schoolClassesListView.setItems(schoolClasses);
+    }
+
+    public void showAddStudentPane(ActionEvent event) {
         clickblocker.setVisible(true);
         addstudentvbox.setVisible(true);
     }
+
+    private void hideAddStudentPane() {
+        firstnamefield.clear();
+        surnameField.clear();
+        clickblocker.setVisible(false);
+        addstudentvbox.setVisible(false);
+    }
+
+
 
     public void addStudentConfirm(ActionEvent event) {
         String firstName = firstnamefield.getText();
@@ -62,21 +109,14 @@ public class StudentsWindowController {
             Student student = new Student(firstName, surname, dataHolder.getLastStudentId());
             dataHolder.addStudent(student);
             refreshStudentList(); // Aktualizacja listy uczniów
-            closeAddStudentPane();
+            hideAddStudentPane();
         } else {
             System.out.println("Błąd dodawania ucznia. Proszę uzupełnić dane.");
         }
     }
 
     public void addStudentCancel(ActionEvent event) {
-        closeAddStudentPane();
-    }
-
-    private void closeAddStudentPane() {
-        firstnamefield.clear();
-        surnameField.clear();
-        clickblocker.setVisible(false);
-        addstudentvbox.setVisible(false);
+        hideAddStudentPane();
     }
     //endregion
 
@@ -130,6 +170,9 @@ public class StudentsWindowController {
 
         // Obsługa kliknięcia na liście
         studentslistview.setOnMouseClicked(this::clickedOnStudent);
+
+        initializeSchoolClassesListView();
+        refreshSchoolClassesListView();
     }
 
     private void clickedOnStudent(MouseEvent event) {

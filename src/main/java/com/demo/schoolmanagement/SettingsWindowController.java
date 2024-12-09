@@ -109,6 +109,7 @@ public class SettingsWindowController {
                 if (user.getLogin().equals(username)) {
                     userToRemove = user;
                     selectedUser.setText("Usunięto użytkownika");
+                    hideDeleteUserPane();
                     break;
                 }
             }
