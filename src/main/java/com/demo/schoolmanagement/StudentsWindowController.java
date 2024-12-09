@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -44,15 +45,11 @@ public class StudentsWindowController {
     @FXML
     private Pane clickblocker;
 
-    //region Dodawanie ucznia
-    @FXML
-    private VBox addstudentvbox;
-    @FXML
-    private TextField firstnamefield, surnameField;
+    //region Obsługa ListView z klasami szkolnymi
+    // Mapa odwzorowująca nazwę klasy na obiekt
     @FXML
     ListView<String> schoolClassesListView;
 
-    // Mapa odwzorowująca nazwę klasy na obiekt SchoolClass
     private Map<String, SchoolClass> schoolClassMap = new HashMap<>();
 
     private ObservableList<String> schoolClasses = FXCollections.observableArrayList();
@@ -86,6 +83,14 @@ public class StudentsWindowController {
 
         schoolClassesListView.setItems(schoolClasses);
     }
+
+    //endregion
+
+    //region Dodawanie ucznia
+    @FXML
+    private VBox addstudentvbox;
+    @FXML
+    private TextField firstnamefield, surnameField;
 
     public void showAddStudentPane(ActionEvent event) {
         clickblocker.setVisible(true);
@@ -130,8 +135,10 @@ public class StudentsWindowController {
 
     public void showEditUserPane(Student student) {
         this.currentStudent = student;
+        selectedSchoolClass = dataHolder.getSchoolClass(student.getSchoolClassId());
         firstNameTextField.setText(student.getName());
         lastNameTextField.setText(student.getSurname());
+        refreshSchoolClassesListView();
         clickblocker.setVisible(true);
         editUserPane.setVisible(true);
     }

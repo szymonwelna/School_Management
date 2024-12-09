@@ -72,6 +72,10 @@ public class DataHolder {
         schoolClasses.add(schoolClass);
     }
 
+    public SchoolClass getSchoolClass(int schoolClassId) {
+        return schoolClasses.get(schoolClassId);
+    }
+
     public List<SchoolClass> getSchoolClasses() {
         return schoolClasses;
     }
