@@ -2,7 +2,8 @@ package com.demo.schoolmanagement;
 
 import com.demo.schoolmanagement.models.*;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,21 +67,25 @@ public class DataHolder {
     //endregion
 
     //region Zarządzanie klasami
-    private List<SchoolClass> schoolClasses = new ArrayList<>();
+    private HashMap<Integer, SchoolClass> schoolClasses = new HashMap<>();
+
+    public int getLastSchoolClassId() {
+        return Collections.max(schoolClasses.keySet());
+    }
 
     public void addSchoolClass(SchoolClass schoolClass) {
-        schoolClasses.add(schoolClass);
+        schoolClasses.put(schoolClass.getSchoolClassId(), schoolClass);
     }
 
     public SchoolClass getSchoolClass(int schoolClassId) {
         return schoolClasses.get(schoolClassId);
     }
 
-    public List<SchoolClass> getSchoolClasses() {
+    public HashMap<Integer, SchoolClass> getSchoolClasses() {
         return schoolClasses;
     }
 
-    public void setSchoolClasses(List<SchoolClass> schoolClasses) {
+    public void setSchoolClasses(HashMap<Integer, SchoolClass> schoolClasses) {
         this.schoolClasses = schoolClasses;
     }
     //endregion

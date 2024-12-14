@@ -135,17 +135,24 @@ public class DataSaver {
     public static void deserializeSchoolClasses() {
         Gson gson = new Gson();
 
-        // Określenie typu List<User> za pomocą TypeToken
-        Type studentListType = new TypeToken<List<SchoolClass>>() {}.getType();
+        Type schoolClassListType = new TypeToken<HashMap<Integer, SchoolClass>>() {}.getType();
 
-        // Odczyt JSON z pliku
         try (FileReader reader = new FileReader("schoolclasses.json")) {
-            ArrayList<SchoolClass> schoolClasses = gson.fromJson(reader, studentListType);
+            HashMap<Integer, SchoolClass> schoolClassesHashMap = gson.fromJson(reader, schoolClassListType);
+
             DataHolder dataHolder = DataHolder.getInstance();
-            dataHolder.setSchoolClasses(schoolClasses);
+            HashMap<Integer, SchoolClass> schoolClassesMap = new HashMap<>();
+
+            for (SchoolClass schoolClass : schoolClassesHashMap.values()) {
+                int schoolClassId = schoolClass.getSchoolClassId();
+                schoolClassesMap.put(schoolClassId, schoolClass);
+            }
+
+            dataHolder.setSchoolClasses(schoolClassesMap);
+
             System.out.println("Odczytano listę klas z JSON:");
-            for(SchoolClass schoolClass : schoolClasses) {
-                System.out.println(schoolClass.getSchoolClassId());
+            for (SchoolClass schoolClass : schoolClassesMap.values()) {
+                System.out.println("Klasa: " + schoolClass.getSchoolClassName());
                 System.out.println(schoolClass);
             }
 
@@ -153,6 +160,7 @@ public class DataSaver {
             e.printStackTrace();
         }
     }
+
 
     public static void deserializeTeachers() {
         Gson gson = new Gson();

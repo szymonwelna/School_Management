@@ -5,24 +5,34 @@ import java.util.List;
 
 public class SchoolClass {
 
-    private String schoolClassId;
+    private int schoolClassId;
+    private String schoolClassName;
     private int schoolClassTeacher;
     private List<Integer> students;
     private List<Integer> lectures;
 
-    public SchoolClass(String schoolClassId, int schoolClassTeacher) {
-        this.schoolClassId = schoolClassId;
+    public SchoolClass(String schoolClassName, int schoolClassTeacher) {
+        this.schoolClassName = schoolClassName;
         this.schoolClassTeacher = schoolClassTeacher;
         this.students = new ArrayList<>();
         this.lectures = new ArrayList<>();
     }
 
     //region Zarządzanie Id klasy
-    public String getSchoolClassId() {
+    public int getSchoolClassId() {
         return schoolClassId;
     }
-    public void setSchoolClassId(String schoolClassId) {
+    public void setSchoolClassId(int schoolClassId) {
         this.schoolClassId = schoolClassId;
+    }
+    //endregion
+
+    //region Zarządzanie nazwą klasy
+    public String getSchoolClassName() {
+        return schoolClassName;
+    }
+    public void setSchoolClassName(String schoolClassId) {
+        this.schoolClassName = schoolClassId;
     }
     //endregion
 

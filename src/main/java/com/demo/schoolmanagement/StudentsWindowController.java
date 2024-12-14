@@ -11,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -72,18 +71,19 @@ public class StudentsWindowController {
         schoolClasses.clear();
         schoolClassMap.clear();
 
-        schoolClasses.addAll(
-                dataHolder.getSchoolClasses().stream()
-                        .map(schoolClass -> {
-                            String schoolClassId = schoolClass.getSchoolClassId();
-                            schoolClassMap.put(schoolClassId, schoolClass);
-                            return schoolClassId;
-                        })
-                        .collect(Collectors.toList())
-        );
+        dataHolder.getSchoolClasses().forEach((schoolClassId, schoolClass) -> {
+            String schoolClassName = schoolClass.getSchoolClassName();
 
+            schoolClassMap.put(schoolClassName, schoolClass);
+
+            schoolClasses.add(schoolClassName);
+        });
+
+        // Ustawienie listy klas w ListView
         schoolClassesListView.setItems(schoolClasses);
     }
+
+
 
     //endregion
 
@@ -175,7 +175,7 @@ public class StudentsWindowController {
     public void refreshCurrentSchoolClassLabel() {
         int currentSchoolClass = currentStudent.getSchoolClassId();
         SchoolClass schoolClass = dataHolder.getSchoolClass(currentSchoolClass);
-        studentSchoolClassLabel.setText(schoolClass.getSchoolClassId());
+        studentSchoolClassLabel.setText(schoolClass.getSchoolClassName());
     }
     //endregion
 

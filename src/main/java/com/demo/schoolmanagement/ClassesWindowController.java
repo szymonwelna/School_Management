@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ClassesWindowController {
     private Stage stage;
@@ -48,7 +47,7 @@ public class ClassesWindowController {
     @FXML
     AnchorPane addSchoolClassPane;
     @FXML
-    TextField schoolClassIdTextField;
+    TextField schoolClassNameTextField;
     @FXML
     ComboBox<String> teacherComboBox;
     @FXML
@@ -78,8 +77,9 @@ public class ClassesWindowController {
             String selectedTeacherName = teacherComboBox.getSelectionModel().getSelectedItem();
             int teacherId = getTeacherIdByName(selectedTeacherName);
 
-            SchoolClass schoolClass = new SchoolClass(schoolClassIdTextField.getText(), teacherId);
-            schoolClassesMap.put(schoolClass.getSchoolClassId(), schoolClass);
+
+            SchoolClass schoolClass = new SchoolClass(schoolClassNameTextField.getText(), teacherId);
+            schoolClassesMap.put(schoolClass.getSchoolClassName(), schoolClass);
             dataHolder.addSchoolClass(schoolClass);
             refreshSchoolClassesList(); // Odświeżenie listy klas po dodaniu nowej klasy
             hideAddSchoolClassPane();
@@ -89,30 +89,30 @@ public class ClassesWindowController {
     public void hideAddSchoolClassPane() {
         clickBlocker.setVisible(false);
         addSchoolClassPane.setVisible(false);
-        schoolClassIdTextField.setText("");
+        schoolClassNameTextField.setText("");
         teacherComboBox.getSelectionModel().clearSelection();
         addSchoolClassWarningLabel.setText("");
     }
 
     private boolean isProvidedDataValid() {
-        String classId = schoolClassIdTextField.getText();
+        String schoolClassName = schoolClassNameTextField.getText();
         String teacher = teacherComboBox.getSelectionModel().getSelectedItem();
 
         // Sprawdzenie, czy oba pola są puste/niewypełnione
-        if (classId.isEmpty() && teacher == null) {
+        if (schoolClassName.isEmpty() && teacher == null) {
             addSchoolClassWarningLabel.setText("Wprowadź dane");
             return false;
         }
         // Sprawdzanie poprawności identyfikatora klasy
-        if (classId.isEmpty()) {
+        if (schoolClassName.isEmpty()) {
             addSchoolClassWarningLabel.setText("Proszę podać nazwę klasy");
             return false;
         }
-        if (schoolClasses.contains(classId)) {
+        if (schoolClasses.contains(schoolClassName)) {
             addSchoolClassWarningLabel.setText("Klasa o podanej nazwie już istnieje");
             return false;
         }
-        if (!(classId.length() == 2 && classId.matches("[1-8][a-zA-Z]"))) {
+        if (!(schoolClassName.length() == 2 && schoolClassName.matches("[1-8][a-zA-Z]"))) {
             addSchoolClassWarningLabel.setText("Wprowadź nazwę w formie, np: 1c ");
             return false;
         }
@@ -165,18 +165,17 @@ public class ClassesWindowController {
         schoolClasses.clear();
         schoolClassesMap.clear();
 
-        schoolClasses.addAll(
-                dataHolder.getSchoolClasses().stream()
-                        .map(schoolClass -> {
-                            String schoolClassId = schoolClass.getSchoolClassId();
-                            schoolClassesMap.put(schoolClassId, schoolClass);
-                            return schoolClassId;
-                        })
-                        .collect(Collectors.toList())
-        );
+        // Pobierz wszystkie klasy ze źródła danych (dataHolder)
+        dataHolder.getSchoolClasses().forEach((currentSchoolClassId, currentSchoolClass) -> {
+            String schoolClassName = currentSchoolClass.getSchoolClassName();
+            schoolClassesMap.put(schoolClassName, currentSchoolClass);
+            schoolClasses.add(schoolClassName);
+        });
 
+        // Ustawiamy elementy w ListView
         schoolClassesListView.setItems(schoolClasses);
     }
+
     //endregion
 
     //region Powrót do MainWindow
