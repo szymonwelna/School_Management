@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public class SettingsWindowController {
@@ -88,39 +89,48 @@ public class SettingsWindowController {
     Button confirmDeleteButton, cancelDeleteButton;
 
     public void showDeleteUserPane() {
-        loadUsersIntoListView();
+        loadUsersIntoListView(); // Ładuj użytkowników do ListView
         clickBlocker.setVisible(true);
         deleteUserPane.setVisible(true);
     }
+
     public void hideDeleteUserPane() {
         clickBlocker.setVisible(false);
         deleteUserPane.setVisible(false);
-        selectedUser.setText("");
+        selectedUser.setText(""); // Czyść tekst wybranego użytkownika
     }
+
     public void deleteUser() {
         String username = selectedUser.getText();
         if (username.isEmpty()) {
-            selectedUser.setText("Nie wybrano użytkownika");
+            selectedUser.setText("Nie wybrano użytkownika"); // Komunikat w przypadku braku wyboru
         } else {
+            // Pobieranie instancji DataHolder
             DataHolder dataHolder = DataHolder.getInstance();
-            List<User> usersList = dataHolder.getUsers();
-            User userToRemove = null;
-            for (User user : usersList) {
+            HashMap<Integer, User> usersHashMap = dataHolder.getUsers();
+
+            // Znajdź ID użytkownika do usunięcia na podstawie loginu
+            Integer userToRemoveId = null;
+            for (HashMap.Entry<Integer, User> entry : usersHashMap.entrySet()) {
+                User user = entry.getValue();
                 if (user.getLogin().equals(username)) {
-                    userToRemove = user;
+                    userToRemoveId = entry.getKey(); // Pobierz klucz użytkownika
                     selectedUser.setText("Usunięto użytkownika");
                     hideDeleteUserPane();
                     break;
                 }
             }
-            if (userToRemove != null) {
-                usersList.remove(userToRemove);
-                loadUsersIntoListView();
+
+            if (userToRemoveId != null) {
+                // Usuń użytkownika z HashMap
+                usersHashMap.remove(userToRemoveId);
+                loadUsersIntoListView(); // Odśwież ListView
             } else {
                 System.out.println("Nie znaleziono użytkownika: " + username);
             }
         }
     }
+
 
     @FXML
     ListView<String> usersListView;
@@ -134,9 +144,11 @@ public class SettingsWindowController {
     private void loadUsersIntoListView() {
         DataHolder dataHolder = DataHolder.getInstance();
         users.clear();
-        for (User user : dataHolder.getUsers()) {
+
+        for (User user : dataHolder.getUsers().values()) {
             users.add(user.getLogin());
         }
+
         usersListView.setItems(users);
     }
 
@@ -146,5 +158,6 @@ public class SettingsWindowController {
             selectedUser.setText(selectedUsername);
         }
     }
+
     //endregion
 }

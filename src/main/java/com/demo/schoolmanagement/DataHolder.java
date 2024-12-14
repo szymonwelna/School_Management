@@ -15,21 +15,21 @@ public class DataHolder {
     }
 
     //region Zarządzanie użytkownikami
-    private List<User> users = new ArrayList<User>();
+    private HashMap<Integer, User> users = new HashMap<>();
 
     public void addUser(User user) {
-        users.add(user);
+        users.put(user.getUserId(), user);
     }
 
-    public void removeUser(User user) {
-        users.remove(user);
+    public void removeUser(int userId) {
+        users.remove(userId);
     }
 
-    public List<User> getUsers() {
+    public HashMap<Integer, User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(HashMap<Integer, User> users) {
         this.users = users;
     }
     //endregion

@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,7 +58,7 @@ public class LoginWindowController {
 
     private boolean checkPassword(String username, String password) {
         DataHolder dataHolder = DataHolder.getInstance();
-        List<User> users = dataHolder.getUsers();
+        HashMap<Integer, User> users = dataHolder.getUsers();
         if (users.isEmpty()) {
             System.out.println("Baza użytkowników jest pusta. Logowanie jako administrator.");
             return true;
@@ -65,7 +66,7 @@ public class LoginWindowController {
         if (username == null || password == null) {
             return false;
         }
-        for (User user : users) {
+        for (User user : users.values()) {
             if (username.equals(user.getLogin()) && password.equals(user.getPassword())) {
                 return true;
             }

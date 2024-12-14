@@ -93,15 +93,15 @@ public class DataSaver {
         Gson gson = new Gson();
 
         // Określenie typu List<User> za pomocą TypeToken
-        Type studentListType = new TypeToken<List<User>>() {}.getType();
+        Type studentListType = new TypeToken<HashMap<Integer, User>>() {}.getType();
 
         // Odczyt JSON z pliku
         try (FileReader reader = new FileReader("users.json")) {
-            ArrayList<User> users = gson.fromJson(reader, studentListType);
+            HashMap<Integer, User> users = gson.fromJson(reader, studentListType);
             DataHolder dataHolder = DataHolder.getInstance();
             dataHolder.setUsers(users);
             System.out.println("Odczytano listę użytkowników z JSON:");
-            for(User user : users) {
+            for(User user : users.values()) {
                 System.out.println(user.getLogin());
                 System.out.println(user);
             }

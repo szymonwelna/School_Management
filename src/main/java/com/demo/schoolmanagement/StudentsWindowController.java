@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -130,6 +131,8 @@ public class StudentsWindowController {
     private AnchorPane editUserPane;
     @FXML
     private TextField firstNameTextField, lastNameTextField;
+    @FXML
+    private Label studentSchoolClassLabel;
 
     private Student currentStudent;
 
@@ -138,6 +141,7 @@ public class StudentsWindowController {
         selectedSchoolClass = dataHolder.getSchoolClass(student.getSchoolClassId());
         firstNameTextField.setText(student.getName());
         lastNameTextField.setText(student.getSurname());
+        refreshCurrentSchoolClassLabel();
         refreshSchoolClassesListView();
         clickblocker.setVisible(true);
         editUserPane.setVisible(true);
@@ -166,6 +170,12 @@ public class StudentsWindowController {
             refreshStudentList(); // Aktualizacja listy uczniów
             hideEditUserPane();
         }
+    }
+
+    public void refreshCurrentSchoolClassLabel() {
+        int currentSchoolClass = currentStudent.getSchoolClassId();
+        SchoolClass schoolClass = dataHolder.getSchoolClass(currentSchoolClass);
+        studentSchoolClassLabel.setText(schoolClass.getSchoolClassId());
     }
     //endregion
 

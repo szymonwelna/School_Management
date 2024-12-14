@@ -1,6 +1,7 @@
 package com.demo.schoolmanagement.models;
 
 public class User {
+    private int id;
     private int uprawnienia;    // 1 - Użytkownik standardowy 2 - Administrator
     private String login;
     private String password;
@@ -9,6 +10,12 @@ public class User {
         this.uprawnienia = uprawnienia;
         this.login = login;
         this.password = password;
+    }
+    public Integer getUserId() {
+        return id;
+    }
+    public void setUserId(Integer id) {
+        this.id = id;
     }
     public int getUprawnienia() {
         return uprawnienia;
