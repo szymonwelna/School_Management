@@ -11,7 +11,8 @@ public class SchoolClass {
     private List<Integer> students;
     private List<Integer> lectures;
 
-    public SchoolClass(String schoolClassName, int schoolClassTeacher) {
+    public SchoolClass(int schoolClassId, String schoolClassName, int schoolClassTeacher) {
+        this.schoolClassId = schoolClassId;
         this.schoolClassName = schoolClassName;
         this.schoolClassTeacher = schoolClassTeacher;
         this.students = new ArrayList<>();

@@ -82,9 +82,6 @@ public class StudentsWindowController {
         // Ustawienie listy klas w ListView
         schoolClassesListView.setItems(schoolClasses);
     }
-
-
-
     //endregion
 
     //region Dodawanie ucznia
@@ -104,8 +101,6 @@ public class StudentsWindowController {
         clickblocker.setVisible(false);
         addstudentvbox.setVisible(false);
     }
-
-
 
     public void addStudentConfirm(ActionEvent event) {
         String firstName = firstnamefield.getText();
@@ -159,6 +154,10 @@ public class StudentsWindowController {
         if (currentStudent != null) {
             currentStudent.changeName(firstNameTextField.getText());
             currentStudent.changeSurname(lastNameTextField.getText());
+            // Klasa pobrana z listview
+            String selectedClassName = schoolClassesListView.getSelectionModel().getSelectedItem();
+            SchoolClass selectedSchoolClass = schoolClassMap.get(selectedClassName);
+            currentStudent.changeSchoolClassId(selectedSchoolClass.getSchoolClassId());
             refreshStudentList(); // Aktualizacja listy uczniów
             hideEditUserPane();
         }

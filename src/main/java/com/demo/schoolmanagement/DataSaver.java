@@ -25,6 +25,7 @@ public class DataSaver {
 
     public static void saveData() {
         DataHolder dataHolder = DataHolder.getInstance();
+        DataSorter dataSorter = DataSorter.getInstance();
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
                 .create();
@@ -66,6 +67,7 @@ public class DataSaver {
         }
 
         if (dataHolder.getSchoolClasses() != null) {
+            dataSorter.sortSchoolClasses();
             json = gson.toJson(dataHolder.getSchoolClasses());
 
             try (FileWriter writer = new FileWriter("schoolclasses.json")) {

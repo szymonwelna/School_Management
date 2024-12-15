@@ -30,6 +30,7 @@ public class ClassesWindowController {
 
     // Pobranie instancji DataHolder
     private final DataHolder dataHolder = DataHolder.getInstance();
+    private final DataSorter dataSorter = new DataSorter();
 
     // Mapa odwzorowująca nazwę klasy na obiekt SchoolClass
     private Map<String, SchoolClass> schoolClassesMap = new HashMap<>();
@@ -78,9 +79,10 @@ public class ClassesWindowController {
             int teacherId = getTeacherIdByName(selectedTeacherName);
 
 
-            SchoolClass schoolClass = new SchoolClass(schoolClassNameTextField.getText(), teacherId);
+            SchoolClass schoolClass = new SchoolClass(dataHolder.getLastSchoolClassId() + 1, schoolClassNameTextField.getText().toUpperCase(), teacherId);
             schoolClassesMap.put(schoolClass.getSchoolClassName(), schoolClass);
             dataHolder.addSchoolClass(schoolClass);
+            dataSorter.sortSchoolClasses();
             refreshSchoolClassesList(); // Odświeżenie listy klas po dodaniu nowej klasy
             hideAddSchoolClassPane();
         }
