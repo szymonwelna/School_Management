@@ -51,7 +51,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <ListView fx:id="schoolClassesListView" prefHeight="106.0" prefWidth="280.0" />
+            <ListView fx:id="schoolClassesListView1" prefHeight="106.0" prefWidth="280.0" />
             <HBox prefHeight="55.0" prefWidth="280.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#addStudentCancel" prefHeight="46.0" prefWidth="147.0" text="Anuluj">
@@ -75,12 +75,11 @@
             <Label layoutX="12.0" layoutY="201.0" prefHeight="18.0" prefWidth="39.0" text="Oceny:" />
             <TextField fx:id="firstNameTextField" layoutX="10.0" layoutY="59.0" AnchorPane.leftAnchor="10.0" />
             <TextField fx:id="lastNameTextField" layoutX="180.0" layoutY="59.0" AnchorPane.rightAnchor="10.399999999999977" />
-            <ListView fx:id="schoolClassesListView" layoutX="10.0" layoutY="109.0" prefHeight="85.0" prefWidth="320.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-            <ListView fx:id="gradesListView" layoutX="10.0" layoutY="219.0" prefHeight="85.0" prefWidth="320.0" />
+            <ListView fx:id="schoolClassesListView2" layoutX="10.0" layoutY="109.0" prefHeight="85.0" prefWidth="320.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            <ListView fx:id="gradesListView2" layoutX="10.0" layoutY="219.0" prefHeight="85.0" prefWidth="320.0" />
             <Button fx:id="confirmButton" layoutX="217.0" layoutY="310.0" mnemonicParsing="false" onAction="#confirmChanges" text="Zatwierdź zmiany" />
             <Button fx:id="cancelButton" layoutX="13.0" layoutY="310.0" mnemonicParsing="false" onAction="#hideEditUserPane" prefHeight="26.0" prefWidth="87.0" text="Anuluj" />
             <Button fx:id="deleteStudentButton" layoutX="116.0" layoutY="310.0" mnemonicParsing="false" onAction="#deleteStudent" prefHeight="26.0" prefWidth="87.0" text="Usuń ucznia" />
-            <Label fx:id="studentSchoolClassLabel" layoutX="43.0" layoutY="91.0" text=" " />
          </children>
       </AnchorPane>
     </children>

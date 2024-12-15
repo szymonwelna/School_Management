@@ -25,7 +25,7 @@ public class Student extends Person {
     //endregion
 
     //region SchoolClass management
-    public void changeSchoolClassId(int id) {
+    public void setSchoolClassId(int id) {
         schoolClassId = id;
     }
     public int getSchoolClassId() {

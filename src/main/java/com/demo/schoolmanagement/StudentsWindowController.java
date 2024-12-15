@@ -46,28 +46,31 @@ public class StudentsWindowController {
     private Pane clickblocker;
 
     //region Obsługa ListView z klasami szkolnymi
-    // Mapa odwzorowująca nazwę klasy na obiekt
     @FXML
-    ListView<String> schoolClassesListView;
+    ListView<String> schoolClassesListView1;
+
+    @FXML
+    ListView<String> schoolClassesListView2;
 
     private Map<String, SchoolClass> schoolClassMap = new HashMap<>();
 
     private ObservableList<String> schoolClasses = FXCollections.observableArrayList();
 
-    private SchoolClass selectedSchoolClass;
+    private SchoolClass studentSchoolClass;
 
-    private void initializeSchoolClassesListView() {
-        schoolClassesListView.setOnMouseClicked(this::clickedOnSchoolClass);
+    private void initializeSchoolClassesListViews() {
+        schoolClassesListView1.setOnMouseClicked(event -> clickedOnSchoolClass(schoolClassesListView1));
+        schoolClassesListView2.setOnMouseClicked(event -> clickedOnSchoolClass(schoolClassesListView2));
     }
 
-    private void clickedOnSchoolClass(MouseEvent event) {
-        String chosenSchoolClassId = schoolClassesListView.getSelectionModel().getSelectedItem();
+    private void clickedOnSchoolClass(ListView<String> listView) {
+        String chosenSchoolClassId = listView.getSelectionModel().getSelectedItem();
         if (chosenSchoolClassId != null) {
-            selectedSchoolClass = schoolClassMap.get(chosenSchoolClassId);
+            studentSchoolClass = schoolClassMap.get(chosenSchoolClassId);
         }
     }
 
-    private void refreshSchoolClassesListView() {
+    private void refreshSchoolClassesListViews() {
         schoolClasses.clear();
         schoolClassMap.clear();
 
@@ -79,8 +82,9 @@ public class StudentsWindowController {
             schoolClasses.add(schoolClassName);
         });
 
-        // Ustawienie listy klas w ListView
-        schoolClassesListView.setItems(schoolClasses);
+        // Ustawienie listy klas w obu ListView
+        schoolClassesListView1.setItems(schoolClasses);
+        schoolClassesListView2.setItems(schoolClasses);
     }
     //endregion
 
@@ -91,6 +95,7 @@ public class StudentsWindowController {
     private TextField firstnamefield, surnameField;
 
     public void showAddStudentPane(ActionEvent event) {
+        refreshSchoolClassesListViews();
         clickblocker.setVisible(true);
         addstudentvbox.setVisible(true);
     }
@@ -98,6 +103,7 @@ public class StudentsWindowController {
     private void hideAddStudentPane() {
         firstnamefield.clear();
         surnameField.clear();
+        studentSchoolClass = null;
         clickblocker.setVisible(false);
         addstudentvbox.setVisible(false);
     }
@@ -109,7 +115,11 @@ public class StudentsWindowController {
         if (!firstName.isEmpty() && !surname.isEmpty()) {
             Student student = new Student(firstName, surname, dataHolder.getLastStudentId());
             dataHolder.addStudent(student);
-            refreshStudentList(); // Aktualizacja listy uczniów
+            if (studentSchoolClass != null) {
+                student.setSchoolClassId(studentSchoolClass.getSchoolClassId());
+            }
+            studentSchoolClass = null;
+            refreshStudentList();
             hideAddStudentPane();
         } else {
             System.out.println("Błąd dodawania ucznia. Proszę uzupełnić dane.");
@@ -126,42 +136,61 @@ public class StudentsWindowController {
     private AnchorPane editUserPane;
     @FXML
     private TextField firstNameTextField, lastNameTextField;
-    @FXML
-    private Label studentSchoolClassLabel;
 
     private Student currentStudent;
 
     public void showEditUserPane(Student student) {
         this.currentStudent = student;
-        selectedSchoolClass = dataHolder.getSchoolClass(student.getSchoolClassId());
+
+        // Pobranie klasy ucznia
+        studentSchoolClass = dataHolder.getSchoolClass(student.getSchoolClassId());
         firstNameTextField.setText(student.getName());
         lastNameTextField.setText(student.getSurname());
-        refreshCurrentSchoolClassLabel();
-        refreshSchoolClassesListView();
+
+        refreshSchoolClassesListViews();
+
+        // Jeśli uczeń ma przypisaną klasę, zaznacz ją w obu listach
+        if (studentSchoolClass != null) {
+            String selectedClassName = studentSchoolClass.getSchoolClassName();
+
+            // Ustaw zaznaczenie w obu listach
+            schoolClassesListView1.getSelectionModel().select(selectedClassName);
+            schoolClassesListView2.getSelectionModel().select(selectedClassName);
+        }
+
         clickblocker.setVisible(true);
         editUserPane.setVisible(true);
     }
+
 
     public void hideEditUserPane() {
         currentStudent = null;
         firstNameTextField.clear();
         lastNameTextField.clear();
+        
+        schoolClassesListView1.getSelectionModel().clearSelection();
+        schoolClassesListView2.getSelectionModel().clearSelection();
+
         clickblocker.setVisible(false);
         editUserPane.setVisible(false);
     }
 
+
     public void confirmChanges() {
         if (currentStudent != null) {
+            // Aktualizacja imienia i nazwiska
             currentStudent.changeName(firstNameTextField.getText());
             currentStudent.changeSurname(lastNameTextField.getText());
             // Klasa pobrana z listview
-            String selectedClassName = schoolClassesListView.getSelectionModel().getSelectedItem();
+            String selectedClassName = schoolClassesListView2.getSelectionModel().getSelectedItem();
             SchoolClass selectedSchoolClass = schoolClassMap.get(selectedClassName);
-            currentStudent.changeSchoolClassId(selectedSchoolClass.getSchoolClassId());
+            currentStudent.setSchoolClassId(selectedSchoolClass.getSchoolClassId());
             refreshStudentList(); // Aktualizacja listy uczniów
             hideEditUserPane();
         }
     }
+
+
 
     public void deleteStudent() {
         if (currentStudent != null) {
@@ -169,12 +198,6 @@ public class StudentsWindowController {
             refreshStudentList(); // Aktualizacja listy uczniów
             hideEditUserPane();
         }
-    }
-
-    public void refreshCurrentSchoolClassLabel() {
-        int currentSchoolClass = currentStudent.getSchoolClassId();
-        SchoolClass schoolClass = dataHolder.getSchoolClass(currentSchoolClass);
-        studentSchoolClassLabel.setText(schoolClass.getSchoolClassName());
     }
     //endregion
 
@@ -187,8 +210,8 @@ public class StudentsWindowController {
         // Obsługa kliknięcia na liście
         studentslistview.setOnMouseClicked(this::clickedOnStudent);
 
-        initializeSchoolClassesListView();
-        refreshSchoolClassesListView();
+        initializeSchoolClassesListViews();
+        refreshSchoolClassesListViews();
     }
 
     private void clickedOnStudent(MouseEvent event) {
